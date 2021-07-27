@@ -25,7 +25,12 @@ RUN apt update && \
   gdb \
   silversearcher-ag \
   tree \
-  tmux
+  tmux \
+  python3-dev
+
+RUN pip install wheel && \
+    pip install PyOpenGL PyOpenGL_accelerate
+
 
 RUN if [ "$base_img" = "ubuntu:bionic" ]; then \
       apt install -y \
@@ -60,7 +65,8 @@ RUN ssh-keyscan github.com >> $ssh_dir_path/known_hosts && \
 
 #cloning repositories
 WORKDIR /home/$USERNAME
-RUN git clone git@github.com:dinies/dotfiles.git
+RUN git clone git@github.com:dinies/dotfiles.git && \
+    git clone git@github.com:dinies/PythonGraphicsSimulator.git
 
 # Cmake latest version 
 RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | \
